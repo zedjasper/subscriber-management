@@ -38,4 +38,10 @@ class UserController extends Controller
  
         return response()->json('The provided credentials do not match our records', 403);
     }
+
+    public function logout(){
+        auth()->logout();
+
+        return redirect('/login');
+    }
 }

@@ -19,6 +19,13 @@
     </head>
     <body>
         <div class="container pt-4 pb-4" id="app">
+            <div class="row">
+                <div class="col-md-12 mb-3 d-flex flex-row-reverse">
+                    <a href="/users/logout" class="btn btn-sm btn-danger">Logout</a>
+                    <span class="pl-3">{{auth()->user()->name}}</span>
+                </div>
+            </div>
+            
             @yield('content')
         </div>
     </body>

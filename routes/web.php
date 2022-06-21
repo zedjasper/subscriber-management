@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('login', 'UserController@login')->name('login');
 Route::post('authenticate', 'UserController@authenticate');
 
-Route::group(['middleware' => 'auth'], function(){    
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('users/logout', 'UserController@logout');
+        
     Route::get('/', 'SubscriberController@index');
     Route::get('subscribers/ajax', 'SubscriberController@subscribersAjax');
     Route::get('subscribers/create', 'SubscriberController@create');
