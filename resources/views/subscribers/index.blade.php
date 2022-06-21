@@ -13,6 +13,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>State</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -34,7 +35,8 @@
                 { data: 'id' },
                 { data: 'name' },
                 { data: 'email', },
-                { data: 'state' }
+                { data: 'state' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
             ],
             order: [[1, 'asc']],
             language: {

@@ -23,7 +23,10 @@ class SubscriberController extends Controller
     public function subscribersAjax(Request $request){
         $subscribers = Subscriber::query();
 
-        $datatable = DataTables::of($subscribers);
+        $datatable = DataTables::of($subscribers)
+                        ->addColumn('action', function($subscriber){
+                            return '<a href="/subscribers/create?id='.$subscriber->id.'" class="text-primary"><i class="mdi mdi-square-edit-outline"></i></a><a href="/subscribers/delete?id='.$subscriber->id.'" class="text-danger"><i class="mdi mdi-delete"></i></a>';
+                        });
 
         return $datatable->make(true);
     }
@@ -114,5 +117,18 @@ class SubscriberController extends Controller
         }
 
         return redirect('/')->with('message', 'Subscriber saved');
+    }
+
+    /**
+     * Delete a subscriber
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request){
+        $subscriber = Subscriber::findOrFail($request->id);
+        
+        $subscriber->delete();
+
+        return redirect()->back()->with('message', 'Subscriber deleted');
     }
 }
