@@ -26,6 +26,8 @@
                 </div>
             </div>
             
+            @include('messages')
+            
             @yield('content')
         </div>
     </body>

@@ -1,0 +1,18 @@
+@if(session('message'))
+    <div class="alert alert-success" role="alert">
+        {{session('message')}}
+    </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger" role="alert">
+        {{session('error')}}
+    </div>
+@elseif($errors->any())
+<div class="alert alert-danger">
+    <ul class="list-unstyled">
+        @foreach($errors->all() as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
