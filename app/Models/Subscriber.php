@@ -15,7 +15,8 @@ class Subscriber extends Model
     ];
 
     protected $hidden = [
-        'fieldvalues'
+        'fieldvalues',
+        'user_id'
     ];
 
     public function fieldvalues(){
