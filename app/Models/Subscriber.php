@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BelongsToUser;
 
 class Subscriber extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToUser;
 
     public function fieldvalues(){
         return $this->hasMany('App\Models\FieldValue');
