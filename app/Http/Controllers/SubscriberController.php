@@ -26,7 +26,11 @@ class SubscriberController extends Controller
         $datatable = DataTables::of($subscribers)
                         ->addColumn('action', function($subscriber){
                             return '<a href="/subscribers/create?id='.$subscriber->id.'" class="text-primary"><i class="mdi mdi-square-edit-outline"></i></a><a href="/subscribers/delete?id='.$subscriber->id.'" class="text-danger"><i class="mdi mdi-delete"></i></a>';
-                        });
+                        })
+                        ->editColumn('state', function($subscriber){
+                            return '<span class="badge badge-pill bg-'.$subscriber->state_class.'">'.$subscriber->state.'</span>';
+                        })
+                        ->rawColumns(['state', 'action']);
 
         return $datatable->make(true);
     }

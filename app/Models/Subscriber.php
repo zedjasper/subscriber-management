@@ -18,4 +18,27 @@ class Subscriber extends Model
             $this->{'field_'.$fieldValue->field_id} = $fieldValue->value;
         }
     }
+
+    public function getStateClassAttribute(){
+        $cls = 'info';
+        switch($this->state){
+            case 'active':
+                $cls = 'success';
+                break;
+            case 'unsubscribed':
+                $cls = 'danger';
+                break;
+            case 'junk':
+                $cls = 'secondary';
+                break;
+            case 'bounced':
+                $cls = 'warning';
+                break;
+            case 'unconfirmed':
+                $cls = 'primary';
+                break;
+        }
+
+        return $cls;
+    }
 }
