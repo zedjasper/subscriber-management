@@ -17439,9 +17439,10 @@ __webpack_require__.r(__webpack_exports__);
       this.errorMessage = '';
       this.loading = true;
       axios.post('/authenticate', this.fields).then(function (response) {
+        console.log(response.data);
         _this.loading = false;
         _this.errorMessage = '';
-        window.location = response.data.redirect_url;
+        window.location = response.data;
       })["catch"](function (error) {
         _this.loading = false;
         _this.errorMessage = error.response.data;

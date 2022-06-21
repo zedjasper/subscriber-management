@@ -31,9 +31,10 @@ export default {
             this.errorMessage = '';
             this.loading = true;
             axios.post('/authenticate', this.fields).then(response => {
+                console.log(response.data);
                 this.loading = false;
                 this.errorMessage = '';
-                window.location = response.data.redirect_url;
+                window.location = response.data;
             }).catch(error => {
                 this.loading = false;
                 this.errorMessage = error.response.data;
