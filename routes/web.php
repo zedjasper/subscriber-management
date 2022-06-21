@@ -19,4 +19,6 @@ Route::post('authenticate', 'UserController@authenticate');
 Route::group(['middleware' => 'auth'], function(){    
     Route::get('/', 'SubscriberController@index');
     Route::get('subscribers/ajax', 'SubscriberController@subscribersAjax');
+    Route::get('subscribers/create', 'SubscriberController@create');
+    Route::post('subscribers/store', 'SubscriberController@store');
 });
