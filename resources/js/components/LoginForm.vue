@@ -1,4 +1,5 @@
 <template>
+    <div v-if="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     <form action="/authenticate" method="post" @submit.prevent="submit">
         <div class="form-group mb-3">
             <label>Email</label>
@@ -13,21 +14,29 @@
         <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Login" />
         </div>
+        <div class="mt-2 alert alert-info" v-if="loading"><i class="mdi mdi-loading mdi-spin"></i>Please wait...</div>
     </form>
 </template>
 <script>
 export default {
     data() {
         return {
-            fields: {}
+            fields: {},
+            errorMessage: '',
+            loading: false
         }
     },
     methods: {
         submit() {
+            this.errorMessage = '';
+            this.loading = true;
             axios.post('/authenticate', this.fields).then(response => {
+                this.loading = false;
+                this.errorMessage = '';
                 window.location = response.data.redirect_url;
             }).catch(error => {
-                console.log(error);
+                this.loading = false;
+                this.errorMessage = error.response.data;
             });
         },
     },
