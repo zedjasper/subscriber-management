@@ -18,4 +18,6 @@ Route::post('login', 'UserController@authenticate');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('subscribers', 'SubscriberController@getSubscribers');
+    Route::post('subscribers/store', 'SubscriberController@store');
+    Route::post('subscribers/delete', 'SubscriberController@delete');
 });

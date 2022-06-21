@@ -129,6 +129,10 @@ class SubscriberController extends Controller
             }
         }
 
+        if($request->expectsJson()){
+            return $subscriber;
+        }
+
         return redirect('/')->with('message', 'Subscriber saved');
     }
 
@@ -157,6 +161,10 @@ class SubscriberController extends Controller
         }
         
         $subscriber->delete();
+
+        if($request->expectsJson()){
+            return $subscriber;
+        }
 
         return redirect()->back()->with('message', 'Subscriber deleted');
     }

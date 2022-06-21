@@ -10,6 +10,14 @@ class Subscriber extends Model
 {
     use HasFactory, BelongsToUser;
 
+    protected $appends = [
+        'data'
+    ];
+
+    protected $hidden = [
+        'fieldvalues'
+    ];
+
     public function fieldvalues(){
         return $this->hasMany('App\Models\FieldValue');
     }
@@ -18,6 +26,18 @@ class Subscriber extends Model
         foreach($this->fieldvalues as $fieldValue){
             $this->{'field_'.$fieldValue->field_id} = $fieldValue->value;
         }
+    }
+
+    public function getDataAttribute(){
+        $data = [];
+        foreach($this->fieldvalues as $fieldValue){
+            $data[] = [
+                'title' => $fieldValue->field->title,
+                'value' => $fieldValue->value
+            ];
+        }
+
+        return $data;
     }
 
     public function getStateClassAttribute(){
