@@ -29,6 +29,28 @@
                             @endforeach
                         </div>
                     </div>
+
+                    <table class="table">
+                        @foreach($fields as $field)
+                        <tr>
+                            <td><label>{{$field->title}}</label></td>
+                            <td>
+                                @if($field->type == 'boolean')
+                                <div class="form-check form-switch">
+                                    {{Form::checkbox('field_'.$field->id, 1, null, ['class' => 'form-check-input', 'id'
+                                    => 'field_'.$field->id])}}
+                                </div>
+                                @elseif($field->type == 'number')
+                                {{Form::number('field_'.$field->id, null, ['class' => 'form-control numeric'])}}
+                                @elseif($field->type == 'date')
+                                {{Form::date('field_'.$field->id, null, ['class' => 'form-control'])}}
+                                @else
+                                {{Form::text('field_'.$field->id, null, ['class' => 'form-control numeric'])}}
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
                     
                     <div class="form-group mt-4">
                         <input type="submit" class="btn btn-primary" value="Submit" />

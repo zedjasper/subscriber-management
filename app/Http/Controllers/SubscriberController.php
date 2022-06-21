@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
+use App\Models\FieldValue;
 use App\Models\Field;
 
 class SubscriberController extends Controller
@@ -35,6 +36,8 @@ class SubscriberController extends Controller
      */
     public function create(Request $request){
         $subscriber = Subscriber::findOrNew($request->id);
+
+        $subscriber->attachValues(); //For the form fields for cases of editing
         
         if(!$subscriber->exists){
             $subscriber->state = 'active';
@@ -95,6 +98,20 @@ class SubscriberController extends Controller
         $subscriber->state = $request->state ? $request->state : 'active';
         $subscriber->user_id = auth()->id();
         $subscriber->save();
+
+        $subscriber->fieldvalues()->delete();
+        
+        foreach($fields as $field){
+            $value = $request->{'field_'.$field->id};
+
+            if($value){
+                $fieldValue = new FieldValue;
+                $fieldValue->subscriber_id = $subscriber->id;
+                $fieldValue->field_id = $field->id;
+                $fieldValue->value = $value;
+                $fieldValue->save();
+            }
+        }
 
         return redirect('/')->with('message', 'Subscriber saved');
     }
