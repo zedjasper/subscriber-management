@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Models\FieldValue;
@@ -44,6 +45,10 @@ class SubscriberController extends Controller
     public function create(Request $request){
         $subscriber = Subscriber::findOrNew($request->id);
 
+        if(!Gate::allows('update-subscriber', $subscriber)){
+            abort(403);
+        }
+
         $subscriber->attachValues(); //For the form fields for cases of editing
         
         if(!$subscriber->exists){
@@ -71,6 +76,10 @@ class SubscriberController extends Controller
      */
     public function store(Request $request){
         $subscriber = Subscriber::findOrNew($request->id);
+
+        if(!Gate::allows('update-subscriber', $subscriber)){
+            abort(403);
+        }
 
         $rules = [
             'name' => 'required',
@@ -130,6 +139,10 @@ class SubscriberController extends Controller
      */
     public function delete(Request $request){
         $subscriber = Subscriber::findOrFail($request->id);
+
+        if(!Gate::allows('update-subscriber', $subscriber)){
+            abort(403);
+        }
         
         $subscriber->delete();
 
