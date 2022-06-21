@@ -133,6 +133,18 @@ class SubscriberController extends Controller
     }
 
     /**
+     * API Method: Get the list of subscribers
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getSubscribers(Request $request){
+        $subscribers = Subscriber::orderBy('name')
+                            ->simplePaginate(5);
+
+        return $subscribers;
+    }
+
+    /**
      * Delete a subscriber
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

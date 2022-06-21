@@ -15,3 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', 'UserController@authenticate');
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('subscribers', 'SubscriberController@getSubscribers');
+});
