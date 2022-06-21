@@ -4,7 +4,10 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h5>Subscribers</h5>
+                <h5 class="d-flex justify-content-between align-items-center">
+                    Subscribers
+                    <a href="/subscribers/create" class="btn btn-primary btn-sm"><i class="mdi mdi-plus"></i> Add Subscriber</a>                
+                </h5>
 
                 <table id="datatable" class="table table-striped table-hover">
                     <thead>
