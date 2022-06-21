@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 use App\Models\Subscriber;
 use App\Models\User;
 
@@ -26,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }
 
         Gate::define('update-subscriber', function (User $user, Subscriber $subscriber) {
             return !$subscriber->exists || $user->id === $subscriber->user_id;

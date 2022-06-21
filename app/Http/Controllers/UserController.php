@@ -31,9 +31,21 @@ class UserController extends Controller
         ]);
  
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            $redirectUrl = redirect()->intended('/')->getTargetUrl();
+            
+            //For app logins
+            if($request->expectsJson()){
+                $user = auth()->user();
+                $user->token = $user->createToken(config('app.name'))->accessToken;
+                return response()->json([
+                    'user' => $user,
+                    'redirect_url' => $redirectUrl
+                ]);
+            }else{
+                $request->session()->regenerate();
  
-            return redirect()->intended('/')->getTargetUrl();
+                return $redirectUrl;
+            }
         }
  
         return response()->json('The provided credentials do not match our records', 403);
